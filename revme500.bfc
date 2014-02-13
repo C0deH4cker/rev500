@@ -1,0 +1,166 @@
+
+macro inhex(result) {
+	var c;
+	result = 0;
+	
+	var i = 2;
+	while (i) {
+		i -= 1;
+		
+		in(c);
+		
+		// if(c >= '0')
+		if _lt(47, c) {
+			// c -= '0'
+			c -= 48;
+			
+			// if(c > '9')
+			if _lt(9, c) {
+				// if(c < 'a')
+				if _lt(c, 49) {
+					// Not a hex character
+					c = 16;
+				}
+				else {
+					// a-f?
+					c -= 39;
+					
+					// if(c >= 16)
+					if _lt(15, c) {
+						// Not a hex character
+						c = 16;
+					}
+				}
+			}
+			
+			// if(c < 16)
+			if _lt(c, 16) {
+				// Input was a valid hex character
+				_mul(result, result, 16);
+				result += c;
+			}
+			else {
+				// Invalid char, so continue
+				i += 1;
+			}
+		}
+		else {
+			// Invalid char, so continue
+			i += 1;
+		}
+	}
+}
+
+
+//macro xor(result, a, b) {
+//	var n = 1;
+//	var abit, bbit;
+//    while _and(a, b) {
+//        // or just: result += n * mod_op(a - b, 2);
+//        _mod(abit, a, 2);
+//        _mod(bbit, b, 2);
+//        
+//        if _neq(a, b)
+//            result += n;
+//        
+//        _div(a, a, 2);
+//        _div(b, b, 2);
+//        n += n;
+//    }
+//}
+
+macro correct() {
+	// perl genascii.pl "You're a SOOPER leet H4x0r!! That's the flag!"
+	var char = 0;
+	char += 89; out(char); char += 22; out(char); char +=  6; out(char);
+	char -= 78; out(char); char += 75; out(char); char -= 13; out(char);
+	char -= 69; out(char); char += 65; out(char); char -= 65; out(char);
+	char += 51; out(char); char -=  4; out(char); char +=  0; out(char);
+	char +=  1; out(char); char -= 11; out(char); char += 13; out(char);
+	char -= 50; out(char); char += 76; out(char); char -=  7; out(char);
+	char +=  0; out(char); char += 15; out(char); char -= 84; out(char);
+	char += 40; out(char); char -= 20; out(char); char += 68; out(char);
+	char -= 72; out(char); char += 66; out(char); char -= 81; out(char);
+	char +=  0; out(char); char -=  1; out(char); char += 52; out(char);
+	char += 20; out(char); char -=  7; out(char); char += 19; out(char);
+	char -= 77; out(char); char += 76; out(char); char -= 83; out(char);
+	char += 84; out(char); char -= 12; out(char); char -=  3; out(char);
+	char -= 69; out(char); char += 70; out(char); char +=  6; out(char);
+	char -= 11; out(char); char +=  6; out(char); char -= 70; out(char);
+}
+
+macro incorrect() {
+	// perl genascii.pl 'Wrong flag loser!'
+	var char = 0;
+	char += 87; out(char); char += 27; out(char); char -=  3; out(char);
+	char -=  1; out(char); char -=  7; out(char); char -= 71; out(char);
+	char += 70; out(char); char +=  6; out(char); char -= 11; out(char);
+	char +=  6; out(char); char -= 71; out(char); char += 76; out(char);
+	char +=  3; out(char); char +=  4; out(char); char -= 14; out(char);
+	char += 13; out(char); char -= 81; out(char);
+}
+
+//macro cmp(result, c, v) {
+//	var p = 40;
+//	// printf("%d(%d) ", c, v);
+//	outnum(c); out(p); outnum(v); p += 1; out(p); p -= 9; out(p);
+//	
+//	_neq(result, c, v);
+//}
+
+macro checkflag() {
+	var c, wrong = 0;
+	
+	// "c001cafebabedeadbeeff00dabad1dea"
+	inhex(c); if _neq(c, 192) wrong = 1;
+	inhex(c); if _neq(c,   1) wrong = 1;
+	inhex(c); if _neq(c, 202) wrong = 1;
+	inhex(c); if _neq(c, 254) wrong = 1;
+	inhex(c); if _neq(c, 186) wrong = 1;
+	inhex(c); if _neq(c, 190) wrong = 1;
+	inhex(c); if _neq(c, 222) wrong = 1;
+	inhex(c); if _neq(c, 173) wrong = 1;
+	inhex(c); if _neq(c, 190) wrong = 1;
+	inhex(c); if _neq(c, 239) wrong = 1;
+	inhex(c); if _neq(c, 240) wrong = 1;
+	inhex(c); if _neq(c,  13) wrong = 1;
+	inhex(c); if _neq(c, 171) wrong = 1;
+	inhex(c); if _neq(c, 173) wrong = 1;
+	inhex(c); if _neq(c,  29) wrong = 1;
+	inhex(c); if _neq(c, 234) wrong = 1;
+	
+	if(wrong) incorrect();
+	else correct();
+}
+
+macro welcome() {
+	// perl genascii.pl 'Please enter the flag (32 hex characters): '
+	var char = 0;
+	char += 80; out(char); char += 28; out(char); char -=  7; out(char);
+	char -=  4; out(char); char += 18; out(char); char -= 14; out(char);
+	char -= 69; out(char); char += 69; out(char); char +=  9; out(char);
+	char +=  6; out(char); char -= 15; out(char); char += 13; out(char);
+	char -= 82; out(char); char += 84; out(char); char -= 12; out(char);
+	char -=  3; out(char); char -= 69; out(char); char += 70; out(char);
+	char +=  6; out(char); char -= 11; out(char); char +=  6; out(char);
+	char -= 71; out(char); char +=  8; out(char); char += 11; out(char);
+	char -=  1; out(char); char -= 18; out(char); char += 72; out(char);
+	char -=  3; out(char); char += 19; out(char); char -= 88; out(char);
+	char += 67; out(char); char +=  5; out(char); char -=  7; out(char);
+	char += 17; out(char); char -= 17; out(char); char +=  2; out(char);
+	char += 17; out(char); char -= 15; out(char); char += 13; out(char);
+	char +=  1; out(char); char -= 74; out(char); char += 17; out(char);
+	char -= 26; out(char);
+}
+
+welcome();
+checkflag();
+out(10);
+
+//var c;
+//var true = 1;
+//while(true) {
+//	inhex(c);
+//	outnum(c);
+//	out(32);
+//}
